@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Ochiq yo'llar
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']); // SMS yuborish mantiqi uchun
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);

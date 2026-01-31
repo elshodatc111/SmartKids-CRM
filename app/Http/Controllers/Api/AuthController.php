@@ -88,6 +88,26 @@ class AuthController extends Controller
         return response()->json(['message' => 'Parol yangilandi']);
     }
 
+    public function register(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users,phone',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'type' => 'hodim',
+        ]);
+
+        return response()->json([
+            'message' => 'Foydalanuvchi muvaffaqiyatli ro‘yxatdan o‘tdi',
+            'token' => $user->createToken('auth_token')->plainTextToken,
+            'user' => $user
+        ], 201);
+    }
     // Tizimdan chiqish
     /**
      * @authenticated
