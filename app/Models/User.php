@@ -33,4 +33,7 @@ class User extends Authenticatable{
     public function isOshpaz(): bool {return $this->type === 'oshpaz';}
     public function isTarbiyachi(): bool {return $this->type === 'tarbiyachi';}
 
+    public function financeHistories(){return $this->hasMany(FinanceHistory::class);}
+    public function addedFinanceHistories(){return $this->hasMany(FinanceHistory::class, 'admin_id');}
+
 }

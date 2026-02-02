@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Finance\FinanceController;
 use Illuminate\Support\Facades\Route;
 
 // Ochiq yo'llar
@@ -13,4 +14,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/image', [ProfileController::class, 'updateImage']); // Rasm yuklash
     Route::post('/profile/password', [ProfileController::class, 'updatePassword']); // Parolni yangilash
     Route::post('/logout', [AuthController::class, 'logout']); // Tizimdan chiqish
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/finance', [FinanceController::class, 'getFinance']);
+    Route::get('/finance/histories', [FinanceController::class, 'getFinanceHistory']);
+
 });
