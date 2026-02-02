@@ -3,6 +3,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Finance\FinanceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Kassa\KassaController;
 
 // Ochiq yo'llar
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,4 +21,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/finance', [FinanceController::class, 'getFinance']);
     Route::get('/finance/histories', [FinanceController::class, 'getFinanceHistory']);
 
+});
+
+Route::middleware(['auth:sanctum'])->prefix('kassa')->group(function () {
+    Route::get('/state', [KassaController::class, 'state']);
+    Route::post('/pending', [KassaController::class, 'createPending']);
+    Route::get('/state', [KassaController::class, 'state']);
+    Route::middleware('admin')->group(function () {
+        Route::post('/approve', [KassaController::class, 'approve']);
+        Route::post('/cancel', [KassaController::class, 'cancel']);
+    });
 });
