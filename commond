@@ -1,0 +1,5 @@
+php artisan make:request Auth/LoginRequest
+php artisan make:middleware CheckResetToken
+php artisan make:resource UserResource
+
+
