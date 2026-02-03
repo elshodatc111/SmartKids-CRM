@@ -76,7 +76,6 @@ class KassaService{
                 'admin_id' => $adminId,
                 'end_data' => now(),
                 'donation' => $donationAmount,
-                'status'   => 'approved',
             ]);
             return [
                 'donation_applied' => $donationAmount > 0,

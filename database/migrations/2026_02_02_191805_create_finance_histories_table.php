@@ -15,7 +15,7 @@ return new class extends Migration{
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamp('start_at')->useCurrent();
             $table->foreignId('admin_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->date('end_data')->nullable();
+            $table->timestamp('end_data')->nullable()->change();
             $table->bigInteger('donation')->default(0);
             $table->timestamps();
         });

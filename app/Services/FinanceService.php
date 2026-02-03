@@ -17,13 +17,13 @@ class FinanceService{
         return Finance::firstOrCreate([]);
     }
 
-    public function getFinishedHistories(): Collection {
+    public function getFinishedHistories(): Collection{
         return FinanceHistory::with([
                 'user:id,name',
                 'admin:id,name',
             ])
-            ->whereNotNull('end_data')
-            ->orderBy('id', 'desc')
+            ->whereNotNull('admin_id')
+            ->orderByDesc('id')
             ->get();
     }
 }

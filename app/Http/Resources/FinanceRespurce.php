@@ -11,7 +11,7 @@ class FinanceRespurce extends JsonResource{
             'cash' => $this->cash,
             'card' => $this->card,
             'bank' => $this->bank,
-            'donation_foiz' => $this->donation_foiz,
+            'donation_foiz' => $this->donation_percent,
             'donation' => $this->donation,
         ];
     }
