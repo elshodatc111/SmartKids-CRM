@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Finance\FinanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Kassa\KassaController;
+use App\Http\Controllers\Emploes\EmploesController;
 
 // Ochiq yo'llar
 Route::post('/login', [AuthController::class, 'login']);
@@ -29,4 +30,14 @@ Route::middleware(['auth:sanctum'])->prefix('kassa')->group(function () {
     Route::post('/pedding', [KassaController::class, 'pendingKassa']);
     Route::post('/success/{id}', [KassaController::class, 'successKassa']);
     Route::post('/cancel/{id}', [KassaController::class, 'cancelKassaTransaction']);
+});
+
+Route::middleware(['auth:sanctum'])->prefix('emploes')->group(function () {
+    Route::get('/all', [EmploesController::class, 'allEmploes']);
+    Route::post('/create', [EmploesController::class, 'createEmploes']);
+    Route::get('/show/{$id}', [EmploesController::class, 'showEmploes']);
+    Route::post('/update/{id}', [EmploesController::class, 'updateEmploes']);
+    Route::post('/update/password/{id}', [EmploesController::class, 'passwordUpdate']);
+    Route::post('/create/paymart/{id}', [EmploesController::class, 'createPaymart']);
+    Route::post('/create/davomad/{id}', [EmploesController::class, 'createDavomad']);
 });

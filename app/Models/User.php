@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class User extends Authenticatable{
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
@@ -36,4 +38,17 @@ class User extends Authenticatable{
     public function financeHistories(){return $this->hasMany(FinanceHistory::class);}
     public function addedFinanceHistories(){return $this->hasMany(FinanceHistory::class, 'admin_id');}
 
+    protected function image(): Attribute{
+        return Attribute::make(
+            get: function ($value) {
+                if (!$value || $value === 'storage' || $value === 'profiles/') {
+                    return asset('images/default-avatar.png');
+                }
+                if (filter_var($value, FILTER_VALIDATE_URL)) {
+                    return $value;
+                }
+                return asset('storage/' . $value);
+            },
+        );
+    }
 }
