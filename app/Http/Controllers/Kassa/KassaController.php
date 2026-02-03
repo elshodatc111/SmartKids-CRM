@@ -3,24 +3,18 @@
 namespace App\Http\Controllers\Kassa;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kassa;
-use App\Models\FinanceHistory;
 use App\Services\KassaService;
 use App\Http\Resources\KassaResource;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use App\Http\Requests\PendingKassaRequest;
 use App\Http\Resources\FinanceHistoryKassaResource;
 
 class KassaController extends Controller{
 
     public function getKassa(KassaService $kassaService){
-        $kassa = $kassaService->getOrCreate();
-        return new KassaResource($kassa);
+        return new KassaResource($kassaService->getOrCreate());
     }
 
-    public function pendingKassa(PendingKassaRequest $request,KassaService $kassaService){
+    public function pendingKassa(PendingKassaRequest $request,KassaService $kassaService) {
         try {
             $history = $kassaService->createPending(
                 $request->validated(),
@@ -38,4 +32,7 @@ class KassaController extends Controller{
     }
 
 
+
+
+    
 }

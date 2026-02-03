@@ -1,15 +1,21 @@
 <?php
-
 namespace App\Services;
-
 use App\Models\Kassa;
 use App\Models\FinanceHistory;
 use Illuminate\Support\Facades\DB;
-
 class KassaService{
 
     public function getOrCreate(): Kassa{
-        return Kassa::first() ?? Kassa::create();
+        return Kassa::firstOrCreate(['id' => 1]);
+    }
+
+    public function getSummary(): array    {
+        $kassa = $this->getOrCreate();
+        $pending = FinanceHistory::whereNull('admin_id')->selectRaw('type, reason, SUM(amount) as total')->groupBy('type', 'reason')->get();
+        return [
+            'kassa'   => $kassa,
+            'pending' => $pending,
+        ];
     }
 
     public function createPending(array $data, int $userId): FinanceHistory{
