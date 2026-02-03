@@ -52,4 +52,22 @@ class FinanceService{
             ]);
         });
     }
+
+    public function updateDonationPercent(float $percent): Finance{
+        return DB::transaction(function () use ($percent) {
+            $finance = Finance::lockForUpdate()->firstOrCreate(
+                ['id' => 1],
+                [
+                    'cash'     => 0,
+                    'card'     => 0,
+                    'bank'     => 0,
+                    'donation' => 0,
+                    'donation_percent' => 0,
+                ]
+            );
+            $finance->donation_percent = $percent;
+            $finance->save();
+            return $finance;
+        });
+    }
 }

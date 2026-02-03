@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/finance', [FinanceController::class, 'getFinance']);
     Route::get('/finance/histories', [FinanceController::class, 'getFinanceHistory']);
-    Route::get('/finance/output', [FinanceController::class, 'getFinanceOutput']);
-
+    Route::post('/finance/output', [FinanceController::class, 'getFinanceOutput']);
+    Route::post('/finance/donation-update',[FinanceController::class, 'updateDonationPercent']);
 });
 
 Route::middleware(['auth:sanctum'])->prefix('kassa')->group(function () {
     Route::get('/get', [KassaController::class, 'getKassa']);
     Route::post('/pedding', [KassaController::class, 'pendingKassa']);
-    Route::get('/success/{id}', [KassaController::class, 'successKassa']);
-    Route::get('/cancel/{id}', [KassaController::class, 'cancelKassaTransaction']);
+    Route::post('/success/{id}', [KassaController::class, 'successKassa']);
+    Route::post('/cancel/{id}', [KassaController::class, 'cancelKassaTransaction']);
 });

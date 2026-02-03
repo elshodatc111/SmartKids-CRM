@@ -10,10 +10,12 @@ use App\Services\FinanceService;
 use App\Models\Finance;
 use App\Models\FinanceHistory;
 use App\Http\Requests\Finance\FinanceOutputRequest;
+use App\Http\Requests\Finance\UpdateDonationPercentRequest;
 use Illuminate\Support\Facades\DB;
 
 
 class FinanceController extends Controller{
+
     public function __construct(private FinanceService $financeService) {}
 
     public function getFinance(){
@@ -35,5 +37,14 @@ class FinanceController extends Controller{
         }
     }
 
+    public function updateDonationPercent(UpdateDonationPercentRequest $request,FinanceService $financeService) {
+        $finance = $financeService->updateDonationPercent(
+            $request->donation_percent
+        );
+        return response()->json([
+            'message' => 'Donation percent muvaffaqiyatli yangilandi',
+            'donation_percent' => $finance->donation_percent,
+        ], 200);
+    }
 
 }
