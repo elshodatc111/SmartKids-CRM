@@ -8,7 +8,7 @@ return new class extends Migration{
     public function up(): void{
         Schema::create('finance_histories', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['cash', 'card', 'bank'])->default('cash');
+            $table->enum('type',['cash', 'card', 'bank', 'donation'])->default('cash');
             $table->enum('reason',['xarajat', 'daromad', 'ish_haqi','kirim','exson'])->default('xarajat');
             $table->bigInteger('amount');
             $table->string('description')->nullable();

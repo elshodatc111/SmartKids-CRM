@@ -9,6 +9,8 @@ use App\Http\Resources\FinanceHistoryResource;
 use App\Services\FinanceService;
 use App\Models\Finance;
 use App\Models\FinanceHistory;
+use App\Http\Requests\Finance\FinanceOutputRequest;
+use Illuminate\Support\Facades\DB;
 
 
 class FinanceController extends Controller{
@@ -24,6 +26,14 @@ class FinanceController extends Controller{
         return FinanceHistoryResource::collection($histories);
     }
 
-    
+    public function getFinanceOutput(FinanceOutputRequest $request,FinanceService $financeService) {
+        try {
+            $financeService->financeOutput($request->validated(),auth()->id());
+            return response()->json(['message' => 'Finance tranzaksiya muvaffaqiyatli amalga oshirildi'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
 
 }

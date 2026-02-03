@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/finance', [FinanceController::class, 'getFinance']);
     Route::get('/finance/histories', [FinanceController::class, 'getFinanceHistory']);
+    Route::get('/finance/output', [FinanceController::class, 'getFinanceOutput']);
 
 });
 
