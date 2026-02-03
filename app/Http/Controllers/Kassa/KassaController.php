@@ -36,13 +36,9 @@ class KassaController extends Controller{
     public function cancelKassaTransaction(int $id, KassaService $kassaService){
         try {
             $kassaService->cancelTransaction($id);
-            return response()->json([
-                'message' => 'Tranzaksiya muvaffaqiyatli bekor qilindi'
-            ], 200);
+            return response()->json(['message' => 'Tranzaksiya muvaffaqiyatli bekor qilindi'], 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 

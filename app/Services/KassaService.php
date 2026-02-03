@@ -26,9 +26,7 @@ class KassaService{
             $kassa = Kassa::lockForUpdate()->firstOrCreate(['id' => 1]);
             $balanceField = $data['type'];
             $amount = $data['amount'];
-            if ($kassa->$balanceField < $amount) {
-                throw new \Exception("Kassada yetarli mablag‘ mavjud emas");
-            }
+            if ($kassa->$balanceField < $amount) {throw new \Exception("Kassada yetarli mablag‘ mavjud emas");}
             $kassa->$balanceField -= $amount;
             $pendingPrefix = $data['reason'] === 'xarajat' ? 'cost' : 'out';
             $pendingField  = "{$pendingPrefix}_{$balanceField}_pending";
@@ -47,9 +45,7 @@ class KassaService{
     public function approveTransaction(int $id, int $adminId): array{
         return DB::transaction(function () use ($id, $adminId) {
             $history = FinanceHistory::lockForUpdate()->findOrFail($id);
-            if ($history->admin_id !== null) {
-                throw new \Exception('Bu so‘rov allaqachon tasdiqlangan');
-            }
+            if ($history->admin_id !== null) {throw new \Exception('Bu so‘rov allaqachon tasdiqlangan');}
             $kassa   = Kassa::lockForUpdate()->firstOrCreate(['id' => 1]);
             $finance = Finance::lockForUpdate()->firstOrCreate(['id' => 1]);
             $type   = $history->type;     // cash | card | bank
@@ -61,9 +57,7 @@ class KassaService{
             $netAmount = $amount - $donationAmount;
             if ($reason === 'xarajat') {
                 $pendingField = "cost_{$type}_pending";
-                if ($kassa->$pendingField < $amount) {
-                    throw new \Exception('Kassadagi pending xarajat yetarli emas');
-                }
+                if ($kassa->$pendingField < $amount) {throw new \Exception('Kassadagi pending xarajat yetarli emas');}
                 $kassa->$pendingField -= $amount;
                 if ($donationAmount > 0) {
                     $finance->$type     -= $donationAmount;
@@ -71,17 +65,11 @@ class KassaService{
                 }
             }elseif ($reason === 'kirim') {
                 $pendingField = "out_{$type}_pending";
-                if ($kassa->$pendingField < $amount) {
-                    throw new \Exception('Kassadagi pending kirim yetarli emas');
-                }
+                if ($kassa->$pendingField < $amount) {throw new \Exception('Kassadagi pending kirim yetarli emas');}
                 $kassa->$pendingField -= $amount;
                 $finance->$type      += $netAmount;
-                if ($donationAmount > 0) {
-                    $finance->donation += $donationAmount;
-                }
-            }else {
-                throw new \Exception('Noto‘g‘ri reason turi');
-            }
+                if ($donationAmount > 0) {$finance->donation += $donationAmount;}
+            }else {throw new \Exception('Noto‘g‘ri reason turi');}
             $kassa->save();
             $finance->save();
             $history->update([
@@ -100,12 +88,8 @@ class KassaService{
     public function cancelTransaction(int $id): void{
         DB::transaction(function () use ($id) {
             $history = FinanceHistory::lockForUpdate()->find($id);
-            if (!$history) {
-                throw new \Exception('Tranzaksiya topilmadi');
-            }
-            if ($history->admin_id !== null) {
-                throw new \Exception('Tasdiqlangan tranzaksiyani bekor qilib bo‘lmaydi');
-            }
+            if (!$history) {throw new \Exception('Tranzaksiya topilmadi');}
+            if ($history->admin_id !== null) {throw new \Exception('Tasdiqlangan tranzaksiyani bekor qilib bo‘lmaydi');}
             $kassa = Kassa::lockForUpdate()->firstOrCreate(['id' => 1]);
             $type   = $history->type;     // cash | card | bank
             $reason = $history->reason;   // kirim | xarajat
@@ -118,9 +102,7 @@ class KassaService{
             }
             elseif ($reason === 'kirim') {
                 $pendingField = "out_{$type}_pending";
-                if ($kassa->$pendingField < $amount) {
-                    throw new \Exception('Kassadagi pending kirim noto‘g‘ri holatda');
-                }
+                if ($kassa->$pendingField < $amount) {throw new \Exception('Kassadagi pending kirim noto‘g‘ri holatda');}
                 $kassa->$pendingField -= $amount;
                 $kassa->$type += $amount;
             }
