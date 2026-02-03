@@ -26,7 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum'])->prefix('kassa')->group(function () {
     Route::get('/get', [KassaController::class, 'getKassa']);
     Route::post('/pedding', [KassaController::class, 'pendingKassa']);
-    Route::get('/state', [KassaController::class, 'state']);
+    Route::get('/success/{id}', [KassaController::class, 'successKassa']);
+    Route::get('/cancel/{id}', [KassaController::class, 'cancelKassaTransaction']);
     Route::middleware('admin')->group(function () {
         Route::post('/approve', [KassaController::class, 'approve']);
         Route::post('/cancel', [KassaController::class, 'cancel']);
