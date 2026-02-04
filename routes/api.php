@@ -35,9 +35,9 @@ Route::middleware(['auth:sanctum'])->prefix('kassa')->group(function () {
 Route::middleware(['auth:sanctum'])->prefix('emploes')->group(function () {
     Route::get('/all', [EmploesController::class, 'allEmploes']);
     Route::post('/create', [EmploesController::class, 'createEmploes']);
-    Route::get('/show/{$id}', [EmploesController::class, 'showEmploes']);
     Route::post('/update/{id}', [EmploesController::class, 'updateEmploes']);
-    Route::post('/update/password/{id}', [EmploesController::class, 'passwordUpdate']);
     Route::post('/create/paymart/{id}', [EmploesController::class, 'createPaymart']);
+    Route::get('/show/{$id}', [EmploesController::class, 'showEmploes']);
+    Route::post('/update/password/{id}', [EmploesController::class, 'passwordUpdate']);
     Route::post('/create/davomad/{id}', [EmploesController::class, 'createDavomad']);
 });
