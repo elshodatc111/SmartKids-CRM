@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable{
     use HasApiTokens, HasFactory, Notifiable;
@@ -50,5 +51,9 @@ class User extends Authenticatable{
                 return asset('storage/' . $value);
             },
         );
+    }
+
+    public function kids(): HasMany{
+        return $this->hasMany(Kid::class, 'user_id');
     }
 }
