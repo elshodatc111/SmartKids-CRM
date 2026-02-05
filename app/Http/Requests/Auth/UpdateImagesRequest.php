@@ -14,7 +14,7 @@ class UpdateImagesRequest extends FormRequest{
                 'required',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:512', // 2MB
+                'max:512',
             ],
         ];
     }

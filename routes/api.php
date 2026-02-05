@@ -5,6 +5,7 @@ use App\Http\Controllers\Finance\FinanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Kassa\KassaController;
 use App\Http\Controllers\Emploes\EmploesController;
+use App\Http\Controllers\Kids\KidsController;
 
 // Ochiq yo'llar
 Route::post('/login', [AuthController::class, 'login']);
@@ -41,3 +42,16 @@ Route::middleware(['auth:sanctum'])->prefix('emploes')->group(function () {
     Route::post('/update/password/{id}', [EmploesController::class, 'passwordUpdate']);
     Route::post('/create/davomad/{id}', [EmploesController::class, 'createDavomad']);
 });
+
+Route::middleware(['auth:sanctum'])->prefix('kids')->group(function () {
+    Route::get('/all', [KidsController::class, 'all']);
+    Route::get('/active', [KidsController::class, 'active']);
+    Route::get('/isactive', [KidsController::class, 'inactive']);
+    Route::post('/create', [KidsController::class, 'create']);
+    Route::post('/create/photo/{id}', [KidsController::class, 'createPhoto']);
+    Route::post('/create/document/{id}', [KidsController::class, 'createDocument']);
+    Route::post('/create/passport/{id}', [KidsController::class, 'createPassport']);
+    Route::post('/create/certificate/{id}', [KidsController::class, 'createCertificate']);
+});
+
+    
