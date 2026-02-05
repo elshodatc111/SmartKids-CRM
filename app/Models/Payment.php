@@ -19,7 +19,7 @@ class Payment extends Model{
     public function kid(){
         return $this->belongsTo(Kids::class, 'kid_id');
     }
-
+    
     public function group(){
         return $this->belongsTo(Group::class);
     }
@@ -31,5 +31,6 @@ class Payment extends Model{
     public function successAdmin(){
         return $this->belongsTo(User::class, 'success_admin_id');
     }
+
     
 }

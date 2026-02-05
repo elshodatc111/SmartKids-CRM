@@ -56,7 +56,10 @@ Route::middleware(['auth:sanctum'])->prefix('kids')->group(function () {
     Route::post('/update/{id}', [KidsController::class, 'upadteKid']);  // Bolaning to'lovlari qo'shilmagan
     Route::get('/histore/{id}', [KidsController::class, 'kidsHistory']); // Bolaning tarixi qo'shilmagan
     Route::post('/create/paymart/{id}', [KidsPaymartController::class, 'create']);
-    Route::get('/paymarts/{id}', [KidsPaymartController::class, 'kidsPaymarts']);
+    Route::get('/paymarts', [KidsPaymartController::class, 'allPaymarts']);
+    Route::get('/paymart/{id}', [KidsPaymartController::class, 'kidsPaymarts']);
+    Route::post('/paymart/success{id}', [KidsPaymartController::class, 'kidsPaymartSuccess']);
+    Route::post('/paymart/cancel{id}', [KidsPaymartController::class, 'kidsPaymartCancel']);
 });
 
     
