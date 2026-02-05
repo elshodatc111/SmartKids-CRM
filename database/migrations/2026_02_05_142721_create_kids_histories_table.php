@@ -19,9 +19,9 @@ return new class extends Migration{
                 'group_add','group_pay',
                 'group_delte',
                 'vizited'])->default('vizited');
-            $table->integer('amount');
-            $table->unsignedBigInteger('payment_id'); // FK YO‘Q
-            $table->unsignedBigInteger('group_id');
+            $table->integer('amount')->nullable();
+            $table->unsignedBigInteger('payment_id')->nullable(); // FK YO‘Q
+            $table->unsignedBigInteger('group_id')->nullable();
             $table->text('description');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

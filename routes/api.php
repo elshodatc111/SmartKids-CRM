@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Kassa\KassaController;
 use App\Http\Controllers\Emploes\EmploesController;
 use App\Http\Controllers\Kids\KidsController;
+use App\Http\Controllers\Kids\KidsPaymartController;
 
 // Ochiq yo'llar
 Route::post('/login', [AuthController::class, 'login']);
@@ -51,8 +52,11 @@ Route::middleware(['auth:sanctum'])->prefix('kids')->group(function () {
     Route::post('/create/photo/{id}', [KidsController::class, 'createPhoto']);
     Route::post('/create/document/{id}', [KidsController::class, 'createDocument']);
     Route::post('/create/passport/{id}', [KidsController::class, 'createPassport']);
-    Route::post('/create/certificate/{id}', [KidsController::class, 'createCertificate']);
-    Route::post('/update/{id}', [KidsController::class, 'upadteKid']);
+    Route::post('/create/certificate/{id}', [KidsController::class, 'createCertificate']);  
+    Route::post('/update/{id}', [KidsController::class, 'upadteKid']);  // Bolaning to'lovlari qo'shilmagan
+    Route::get('/histore/{id}', [KidsController::class, 'kidsHistory']); // Bolaning tarixi qo'shilmagan
+    Route::post('/create/paymart/{id}', [KidsPaymartController::class, 'create']);
+    Route::get('/paymarts/{id}', [KidsPaymartController::class, 'kidsPaymarts']);
 });
 
     

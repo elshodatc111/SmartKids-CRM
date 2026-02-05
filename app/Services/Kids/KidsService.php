@@ -3,6 +3,7 @@
 namespace App\Services\Kids;
 
 use App\Models\Kids;
+use App\Models\KidsHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +37,12 @@ class KidsService{
         $data = $request->all();
         $data['user_id'] = auth()->id();
         $kid = Kids::create($data);
+        KidsHistory::create([
+            'kids_id' => $kid->id,
+            'type' => 'vizited',
+            'description' => "Birinchi tashrif",
+            'user_id' => auth()->user()->id,
+        ]);
         return [
             'message' => 'Bola yaratildi',
             'kid'     => $kid,
@@ -53,5 +60,7 @@ class KidsService{
             'status'  => 200
         ];
     }
+
+    
 
 }
