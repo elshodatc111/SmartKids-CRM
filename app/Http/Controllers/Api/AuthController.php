@@ -14,9 +14,7 @@ use App\Http\Requests\Auth\{LoginRequest,ResetPasswordRequest};
 
 class AuthController extends Controller{
 
-    public function __construct(
-        private AuthService $authService
-    ) {}
+    public function __construct(private AuthService $authService) {}
 
     public function login(LoginRequest $request) {
         $data = $this->authService->login(
