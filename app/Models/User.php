@@ -54,6 +54,31 @@ class User extends Authenticatable{
     }
 
     public function kids(): HasMany{
-        return $this->hasMany(Kid::class, 'user_id');
+        return $this->hasMany(Kids::class, 'user_id');
     }
+    public function kassirPayments(){
+        return $this->hasMany(Payment::class, 'kassir_user_id');
+    }
+    public function approvedPayments(){
+        return $this->hasMany(Payment::class, 'success_admin_id');
+    }
+    public function groupUsers(){
+        return $this->hasMany(GroupUser::class);
+    }
+    public function addedGroupUsers(){
+        return $this->hasMany(GroupUser::class, 'add_admin_id');
+    }
+    public function deletedGroupUsers(){
+        return $this->hasMany(GroupUser::class, 'delete_admin_id');
+    }
+    public function addedGroupKids(){
+        return $this->hasMany(GroupKids::class, 'add_admin_id');
+    }
+    public function deletedGroupKids(){
+        return $this->hasMany(GroupKids::class, 'delete_admin_id');
+    }
+    public function kidsHistories(){
+        return $this->hasMany(KidsHistory::class);
+    }
+
 }
