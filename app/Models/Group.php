@@ -17,10 +17,15 @@ class Group extends Model{
     }
 
     public function users(){
-        return $this->hasMany(GroupUser::class);
+        return $this->hasMany(GroupUser::class, 'group_id');
     }
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function groupKids(){
+        return $this->hasMany(GroupKids::class, 'group_id');
+    }
+    
 }

@@ -5,9 +5,11 @@ namespace App\Services\Group;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\GroupKids;
+use App\Models\KidsHistory;
 use Illuminate\Support\Facades\DB;
 
 class GroupKidsService{
+    
     public function add($request){
         return DB::transaction(function () use ($request) {
             $activeGroup = GroupKids::where('kids_id', $request->kids_id)->where('status', 'active')->first();
@@ -24,6 +26,13 @@ class GroupKidsService{
                 'status'        => 'active',
                 'add_data'      => now(),
                 'add_admin_id'  => auth()->id(),
+            ]);
+            KidsHistory::create([
+                'kids_id' => $request->kids_id,
+                'type' => 'group_add',
+                'group_id' => $request->group_id,
+                'description' => Group::find($request->group_id)->name." guruhga qo'shildi.",
+                'user_id' => auth()->id()
             ]);
             return [
                 'message' => "Bola yangi guruhga qo‘shildi.",
@@ -47,6 +56,13 @@ class GroupKidsService{
                 'status'           => 'delete',
                 'delete_data'       => now(),
                 'delete_admin_id'  => auth()->id(),
+            ]);
+            KidsHistory::create([
+                'kids_id' => $groupKid->kids_id,
+                'type' => 'group_delte',
+                'group_id' => $groupKid->group_id,
+                'description' => Group::find($groupKid->group_id)->name." guruhga o'chirildi.",
+                'user_id' => auth()->id()
             ]);
             return [
                 'message' => "Bola guruhdan chiqarildi.",

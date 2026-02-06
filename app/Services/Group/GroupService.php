@@ -10,20 +10,31 @@ use App\Models\GroupUser;
 use Illuminate\Http\Request;
 
 class GroupService{
-    
+
     public function all(){
-        $groups = Group::with('user')->get()->map(function ($group) {
+        $groups = Group::with('user:id,name')->withCount([
+                'groupKids as count_kids' => function ($q) {
+                    $q->where('status', 'active');
+                },
+                'users as count_users' => function ($q) {
+                    $q->where('status', 'active');
+                },
+            ])->orderBy('id', 'desc')->get()
+            ->map(function ($group) {
                 return [
-                    'id'          => $group->id,
-                    'name'        => $group->name,
-                    'description' => $group->description,
-                    'amount'      => $group->amount,
-                    'user_id'     => $group->user_id,
-                    'user_name'   => $group->user->name ?? null,
-                    'created_at'  => $group->created_at,
-                    'updated_at'  => $group->updated_at,
+                    'id'           => $group->id,
+                    'name'         => $group->name,
+                    'description'  => $group->description,
+                    'amount'       => $group->amount,
+                    'user_id'      => $group->user_id,
+                    'user_name'    => $group->user?->name,
+                    'count_kids'   => $group->count_kids,
+                    'count_users'  => $group->count_users,
+                    'created_at'   => $group->created_at,
+                    'updated_at'   => $group->updated_at,
                 ];
             });
+
         return [
             'message' => 'Barcha guruhlar.',
             'groups'  => $groups,
