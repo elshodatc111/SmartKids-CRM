@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
+use App\Services\AutoUpdateService;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+/*
+ |---------------------------------------------------------
+ | Guruh bolalari uchun oylik to‘lov
+ | Har 30 daqiqada ishlaydi
+ |---------------------------------------------------------
+*/
+Schedule::call(function () {app(AutoUpdateService::class)->ChildPayRun();})->name('child-pay-run-every-30-minutes')->everyThirtyMinutes()->withoutOverlapping()->timezone(config('app.timezone'));

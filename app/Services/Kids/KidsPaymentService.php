@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\KidsHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use App\Services\SmsService;
 
 class KidsPaymentService{
 
@@ -64,6 +65,12 @@ class KidsPaymentService{
                     'description' => $description,
                     'user_id'     => $userId,
                 ]);
+            }
+            $phone = "998945204004";        // 👉 SEN KIRITASAN
+            $smsText = "Diqqat! ATKOdan yangilik! Universitet yonidagi filialimizda 10-aprel kuni soat 16:00da koreys tilidan yangi guruh! Joylar soni cheklangan! Ro'yhat: 95 631 1101";   // 👉 SEN KIRITASAN
+
+            if ($phone && $smsText) {
+                app(SmsService::class)->send($phone, $smsText);
             }
             return $payment;
         });
