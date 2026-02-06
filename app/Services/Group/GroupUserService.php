@@ -42,5 +42,27 @@ class GroupUserService{
             ];
         });
     }
+    public function delete(int $id){
+        return DB::transaction(function () use ($id) {
+            $groupUser = GroupUser::findOrFail($id);
+            if($groupUser->status=='delete'){
+                return [
+                    'message' => "Hodim allaqachon guruhdan o'chiriligan.",
+                    'data'    => $groupUser,
+                    'status'  => 409
+                ];
+            }
+            $groupUser->update([
+                'status'        => 'delete',
+                'delete_data'      => now(),
+                'delete_admin_id'  => auth()->id(),
+            ]);
+            return [
+                'message' => "Hodim guruhdan o'chirildi.",
+                'data'    => $groupUser,
+                'status'  => 200
+            ];
+        });
+    }
 
 }

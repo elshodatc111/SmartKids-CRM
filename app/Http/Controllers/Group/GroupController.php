@@ -54,6 +54,14 @@ class GroupController extends Controller{
         ], $result['status']);
     }
 
+    public function groupUsers($id){
+        $result = $this->groupService->groupUsersGet($id);        
+        return response()->json([
+            'message' => $result['message'],
+            'data'   => $result['data']
+        ], $result['status']);
+    }
+
     public function show($id){
 
     }

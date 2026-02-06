@@ -21,8 +21,12 @@ class GroupUserController extends Controller{
             'data'   => $result['data']
         ], $result['status']);
     }
-    public function delete(Request $request, $id){
-        
+    public function delete($id){
+        $result = $this->groupUserService->delete($id);
+        return response()->json([
+            'message' => $result['message'],
+            'data'   => $result['data']
+        ], $result['status']);
     }
     
 }
