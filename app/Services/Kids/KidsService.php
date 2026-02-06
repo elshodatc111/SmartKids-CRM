@@ -61,6 +61,13 @@ class KidsService{
         ];
     }
 
-    
+    public function history(int $kidId){
+        $history = KidsHistory::with(['user:id,name'])->where('kids_id', $kidId)->orderBy('id', 'desc')->get();
+        return [
+            'message' => 'Bola tarixi',
+            'data'    => $history,
+            'status'  => 200
+        ];
+    }
 
 }

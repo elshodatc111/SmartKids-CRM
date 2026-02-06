@@ -97,5 +97,13 @@ class KidsController extends Controller{
         ], $result['status']);
     }
 
+    public function kidsHistory($id){
+        $result = $this->kidsService->history($id);
+        return response()->json([
+            'message' => $result['message'],
+            'kid'     => $result['data'],
+        ], $result['status']);
+    }
+
     
 }

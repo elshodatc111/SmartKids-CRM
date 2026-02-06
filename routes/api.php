@@ -53,7 +53,6 @@ Route::middleware(['auth:sanctum'])->prefix('kids')->group(function () {
     Route::post('/create/document/{id}', [KidsController::class, 'createDocument']);
     Route::post('/create/passport/{id}', [KidsController::class, 'createPassport']);
     Route::post('/create/certificate/{id}', [KidsController::class, 'createCertificate']);  
-    Route::post('/update/{id}', [KidsController::class, 'upadteKid']);  // Bolaning to'lovlari qo'shilmagan
     Route::get('/histore/{id}', [KidsController::class, 'kidsHistory']); // Bolaning tarixi qo'shilmagan
     Route::post('/create/paymart/{id}', [KidsPaymartController::class, 'create']);
     Route::get('/paymarts', [KidsPaymartController::class, 'allPaymarts']);
