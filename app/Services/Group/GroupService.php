@@ -118,6 +118,28 @@ class GroupService{
         ];
     }
 
+    public function show(int $groupId){
+        $group = Group::with('user:id,name')->withCount(['groupKids as kids_count' => function ($q) {$q->where('status', 'active');},
+                'groupUsers as users_count' => function ($q) {$q->where('status', 'active');},])->findOrFail($groupId);
+        $debit = Kids::whereIn('id',GroupKids::where('group_id', $groupId)->where('status', 'active')->pluck('kids_id'))->where('balance', '<', 0)->sum('balance');
+        $Calc = GroupKids::where('group_id',$groupId)->where('status','active')->get();
+        return [
+            'message' => 'Guruh haqida maʼlumot.',
+            'data'    => [
+                'group_id'            => $group->id,
+                'group_name'          => $group->name,
+                'description'         => $group->description,
+                'amount'              => $group->amount,
+                'group_kids_count'    => $group->kids_count,
+                'group_kids_debit'    => $debit,
+                'group_users_count'   => $group->users_count,
+                'admin_id'            => $group->user_id,
+                'admin_name'          => $group->user?->name,
+                'created_at'          => $group->created_at,
+            ],
+            'status'  => 200
+        ];
+    }
 
 
 }

@@ -27,5 +27,9 @@ class Group extends Model{
     public function groupKids(){
         return $this->hasMany(GroupKids::class, 'group_id');
     }
+
+    public function groupUsers(){
+        return $this->hasMany(GroupUser::class, 'group_id');
+    }
     
 }

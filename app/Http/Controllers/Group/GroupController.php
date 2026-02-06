@@ -63,7 +63,11 @@ class GroupController extends Controller{
     }
 
     public function show($id){
-
+        $result = $this->groupService->show($id);        
+        return response()->json([
+            'message' => $result['message'],
+            'data'   => $result['data']
+        ], $result['status']);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Services\Group;
 
 use App\Models\Group;
+use App\Models\Kids;
 use Illuminate\Http\Request;
 use App\Models\GroupKids;
 use App\Models\KidsHistory;
@@ -34,6 +35,9 @@ class GroupKidsService{
                 'description' => Group::find($request->group_id)->name." guruhga qo'shildi.",
                 'user_id' => auth()->id()
             ]);
+            $Kids = Kids::find($request->kids_id);
+            $Kids->is_active = true;
+            $Kids->save();
             return [
                 'message' => "Bola yangi guruhga qo‘shildi.",
                 'data'    => $groupKids,
@@ -64,6 +68,9 @@ class GroupKidsService{
                 'description' => Group::find($groupKid->group_id)->name." guruhga o'chirildi.",
                 'user_id' => auth()->id()
             ]);
+            $Kids = Kids::find($groupKid->kids_id);
+            $Kids->is_active = false;
+            $Kids->save();
             return [
                 'message' => "Bola guruhdan chiqarildi.",
                 'data'    => $groupKid->fresh(),
