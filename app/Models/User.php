@@ -52,7 +52,9 @@ class User extends Authenticatable{
             },
         );
     }
-
+    public function group(): HasMany{
+        return $this->hasMany(Group::class, 'user_id');
+    }
     public function kids(): HasMany{
         return $this->hasMany(Kids::class, 'user_id');
     }

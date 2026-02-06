@@ -9,6 +9,7 @@ class Group extends Model{
         'name',
         'description',
         'amount',
+        'user_id'
     ];
 
     public function kids(){
@@ -17,5 +18,9 @@ class Group extends Model{
 
     public function users(){
         return $this->hasMany(GroupUser::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
