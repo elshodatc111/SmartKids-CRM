@@ -59,13 +59,14 @@ Route::middleware(['auth:sanctum'])->prefix('kids')->group(function () {
     Route::post('/paymart/cancel{id}', [KidsPaymartController::class, 'kidsPaymartCancel']);
 });
 Route::middleware(['auth:sanctum'])->prefix('group')->group(function () {
-    Route::get('/all', [GroupController::class, 'all']);
-    Route::post('/create', [GroupController::class, 'create']);
-    Route::post('/update/{id}', [GroupController::class, 'update']);
+    Route::get('/all', [GroupController::class, 'all']); // +
+    Route::post('/create', [GroupController::class, 'create']);  // +
+    Route::post('/update/{id}', [GroupController::class, 'update']); // +
+    Route::get('/kids/{id}', [GroupController::class, 'groupKids']);  // +
     Route::get('/show/{id}', [GroupController::class, 'show']);  // Kutilmoqda
-    Route::post('/add/kids', [GroupKidController::class, 'add']);
-    Route::post('/delete/kids/{id}', [GroupKidController::class, 'delete']);
-    Route::post('/add/user', [GroupUserController::class, 'add']);
-    Route::post('/delete/user/{id}', [GroupUserController::class, 'delete']);
+    Route::post('/add/kids', [GroupKidController::class, 'add']);  // +
+    Route::post('/delete/kids/{id}', [GroupKidController::class, 'delete']);  // +
+    Route::post('/add/user', [GroupUserController::class, 'add']);  // Kutilmoqda
+    Route::post('/delete/user/{id}', [GroupUserController::class, 'delete']);  // Kutilmoqda
 });
     

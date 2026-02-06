@@ -15,7 +15,7 @@ return new class extends Migration{
             $table->unsignedBigInteger('add_admin_id');
             $table->timestamp('delete_data')->nullable();
             $table->unsignedBigInteger('delete_admin_id')->nullable();
-            $table->string('payment_month');
+            $table->string('payment_month')->nullable();
             $table->timestamps();
         });
     }

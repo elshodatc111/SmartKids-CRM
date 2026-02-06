@@ -3,6 +3,9 @@
 namespace App\Services\Group;
 
 use App\Models\Group;
+use App\Models\Kids;
+use App\Models\User;
+use App\Models\GroupKids;
 use Illuminate\Http\Request;
 
 class GroupService{
@@ -50,6 +53,28 @@ class GroupService{
         return [
             'message' => 'Guruh malumoti yangilandi.',
             'group'   => $group,
+            'status'  => 200
+        ];
+    }
+
+    public function groupKids(int $groupId){
+        Group::findOrFail($groupId);
+        $groupKids = GroupKids::with(['group:id,name','kid:id,full_name','addedBy:id,name','deletedBy:id,name',])->where('group_id', $groupId)->orderBy('id', 'desc')->get();
+        $data = $groupKids->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'kid' => ['id'   => $item->kids_id,'name' => $item->kid?->full_name,],
+                'status' => $item->status,
+                'add_data' => $item->add_data,
+                'add_admin' => ['id'   => $item->add_admin_id,'name' => $item->addedBy?->name,],
+                'delete_data' => $item->delete_data,
+                'delete_admin' => $item->delete_admin_id ? ['id'   => $item->delete_admin_id,'name' => $item->deletedBy?->name,] : null,
+                'payment_month' => $item->payment_month,
+            ];
+        });
+        return [
+            'message' => 'Guruhdagi bolalar tarixi.',
+            'data'    => $data,
             'status'  => 200
         ];
     }

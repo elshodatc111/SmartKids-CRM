@@ -32,4 +32,5 @@ class GroupKids extends Model{
     public function deletedBy(){
         return $this->belongsTo(User::class, 'delete_admin_id');
     }
+
 }

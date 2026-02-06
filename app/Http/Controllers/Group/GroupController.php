@@ -46,6 +46,14 @@ class GroupController extends Controller{
         ], $result['status']);
     }
     
+    public function groupKids($id){
+        $result = $this->groupService->groupKids($id);        
+        return response()->json([
+            'message' => $result['message'],
+            'data'   => $result['data']
+        ], $result['status']);
+    }
+
     public function show($id){
 
     }
