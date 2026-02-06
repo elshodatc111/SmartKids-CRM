@@ -7,6 +7,7 @@ use App\Models\Finance;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Services\SmsService;
 
 
 class UserService{
@@ -42,6 +43,7 @@ class UserService{
     }
 
     public function paySalary(array $data, int $employeeId){
+        Finance::firstOrCreate([]);
         return DB::transaction(function () use ($data, $employeeId) {
             $finance = Finance::lockForUpdate()->first();
             if (!$finance) {
